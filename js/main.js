@@ -4,14 +4,14 @@ GRID = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 /*----- app's state (variables) -----*/
 
-let choicesMade; //feeds who's turn and potential
 let turnStatus = 0;
 let gameStatus = null;
-const winningCombos = {one: 0, two: 0, three: 0, four: 0, five: 0, six: 0, seven: 0, eight: 0};
+let winningCombos = {one: 0, two: 0, three: 0, four: 0, five: 0, six: 0, seven: 0, eight: 0};
 
 /*----- cached element references -----*/
 
 const resetBtn = document.getElementById('reset');
+const msgEl = document.getElementById('message');
 
 /*----- event listeners -----*/
 
@@ -19,18 +19,21 @@ document.querySelector('div').addEventListener('click', handleChoice);
 document.querySelector('button').addEventListener('click', handleButton);
 
 /*----- functions -----*/
+init();
 
 //reset everything
 function init () {
     //1. reset all state
     turnStatus = 0;
-    choicesMade = [];
     gameStatus = null;
     winningCombos = {one: 0, two: 0, three: 0, four: 0,  five: 0, six: 0, seven: 0, eight: 0};
+    //set initial message
+    renderMessage();
+
+    
 }
 
 function handleChoice(evt) {
-    //only allows correct clicks
     if (evt.target.id === 'grid') return;
     if (turnStatus % 2 === 0) 
         if (evt.target.id === 'grid1') {
@@ -104,11 +107,15 @@ function handleChoice(evt) {
         }
     updateGameStatus();
     turnStatus += 1;
-    console.log(winningCombos); //testing that we're adding things
-    console.log(gameStatus); //testing
-    console.log(turnStatus); //testing
+    render();
 }
 
+//transfer state to the DOM
+function render () {
+    renderMessage();
+}
+
+/*-------secondary functions below-------------------------------------------------*/
 function updateGameStatus () {
    if (turnStatus === 8) gameStatus = 'tie';
    if (winningCombos.one === 3 || winningCombos.two === 3 || 
@@ -124,6 +131,32 @@ function updateGameStatus () {
     gameStatus = 'o';
    }
 }
-function handleButton(evt) {
-    console.log('This will run init');
+
+function handleButton() {
+    init();
 }
+
+function renderMessage () {
+    let message = null;
+    if (gameStatus === null) 
+        if (turnStatus % 2 === 0) {
+            message = "X's turn"
+        } else if (turnStatus % 2 !== 0) {
+            message = "O's turn";
+        }
+    if (gameStatus === 'x') {
+        message = "X Wins!";
+    }
+    if (gameStatus === 'o') {
+        message = "O Wins!";
+    }
+    if (gameStatus === 'tie') {
+        message = "It was a tie!";
+    }
+    console.log(message);
+    document.querySelector('h2').innerHTML = message;
+}
+
+
+
+
