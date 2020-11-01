@@ -32,110 +32,98 @@ function init () {
 function handleChoice(evt) {
     //only allows correct clicks
     if (evt.target.id === 'grid') return;
-
-    console.log(evt.target.id); //testing grid response
-    console.log(gameStatus);
-    console.log(turnStatus);
-
     if (turnStatus % 2 === 0) 
-        if (evt.target.id === grid1) {
+        if (evt.target.id === 'grid1') {
             winningCombos.one += 1;
             winningCombos.four += 1;
             winningCombos.seven += 1;
-        } else if (evt.target.id === grid2) {
+        } else if (evt.target.id === 'grid2') {
             winningCombos.two += 1;
             winningCombos.four += 1;
-        } else if (evt.target.id === grid3) {
+        } else if (evt.target.id === 'grid3') {
             winningCombos.eight += 1;
             winningCombos.four += 1;
             winningCombos.three += 1;
-        } else if (evt.target.id === grid4) {
+        } else if (evt.target.id === 'grid4') {
             winningCombos.one += 1;
             winningCombos.five += 1;
-        } else if (evt.target.id === grid5) {
+        } else if (evt.target.id === 'grid5') {
             winningCombos.two += 1;
             winningCombos.five += 1;
             winningCombos.seven += 1;
             winningCombos.eight += 1;
-        } else if (evt.target.id === grid6) {
+        } else if (evt.target.id === 'grid6') {
             winningCombos.three += 1;
             winningCombos.five += 1;
-        } else if ( evt.target.id === grid7 ) {
+        } else if ( evt.target.id === 'grid7' ) {
             winningCombos.eight += 1;
             winningCombos.one += 1;
             winningCombos.six += 1;
-        } else if (evt.target.id === grid8) {
+        } else if (evt.target.id === 'grid8') {
             winningCombos.two += 1;
             winningCombos.six += 1;
-        } else if (evt.target.id === grid9) {
+        } else if (evt.target.id === 'grid9') {
             winningCombos.three += 1;
             winningCombos.seven += 1;
             winningCombos.six += 1;
         }
     if (turnStatus % 2 !== 0) 
-        if (evt.target.id === grid1) {
+        if (evt.target.id === 'grid1') {
             winningCombos.one -= 1;
             winningCombos.four -= 1;
             winningCombos.seven -= 1;
-        } else if (evt.target.id === grid2) {
+        } else if (evt.target.id === 'grid2') {
             winningCombos.two -= 1;
             winningCombos.four -= 1;
-        } else if (evt.target.id === grid3) {
+        } else if (evt.target.id === 'grid3') {
             winningCombos.eight -= 1;
             winningCombos.four -= 1;
             winningCombos.three -= 1;
-        } else if (evt.target.id === grid4) {
+        } else if (evt.target.id === 'grid4') {
             winningCombos.one -= 1;
             winningCombos.five -= 1;
-        } else if (evt.target.id === grid5) {
+        } else if (evt.target.id === 'grid5') {
             winningCombos.two -= 1;
             winningCombos.five -= 1;
             winningCombos.seven -= 1;
             winningCombos.eight -= 1;
-        } else if (evt.target.id === grid6) {
+        } else if (evt.target.id === 'grid6') {
             winningCombos.three -= 1;
             winningCombos.five -= 1;
-        } else if ( evt.target.id === grid7 ) {
+        } else if ( evt.target.id === 'grid7' ) {
             winningCombos.eight -= 1;
             winningCombos.one -= 1;
             winningCombos.six -= 1;
-        } else if (evt.target.id === grid8) {
+        } else if (evt.target.id === 'grid8') {
             winningCombos.two -= 1;
             winningCombos.six -= 1;
-        } else if (evt.target.id === grid9) {
+        } else if (evt.target.id === 'grid9') {
             winningCombos.three -= 1;
             winningCombos.seven -= 1;
             winningCombos.six -= 1;
         }
-        
-        
-
-
-
-
     updateGameStatus();
     turnStatus += 1;
     console.log(winningCombos); //testing that we're adding things
-    
+    console.log(gameStatus); //testing
+    console.log(turnStatus); //testing
 }
 
 function updateGameStatus () {
-    for (let property in winningCombos) {
-        if (property === 3) {  
-            gameStatus = 'x won';
-            return;
-        }
-        if (property === -3) {
-            gameStatus = 'o won';
-            return;
-        }
-        if (turnStatus === 8) {
-            gameStatus = 'tie';
-            return;
-        }
-      }
+   if (turnStatus === 8) gameStatus = 'tie';
+   if (winningCombos.one === 3 || winningCombos.two === 3 || 
+    winningCombos.three === 3 || winningCombos.four === 3 || 
+    winningCombos.five === 3 || winningCombos.six === 3 || 
+    winningCombos.seven === 3 || winningCombos.eight === 3) {
+    gameStatus = 'x';
+   }
+   if (winningCombos.one === -3 || winningCombos.two === -3 || 
+    winningCombos.three === -3 || winningCombos.four === -3 || 
+    winningCombos.five === -3 || winningCombos.six === -3 || 
+    winningCombos.seven === -3 || winningCombos.eight === -3) {
+    gameStatus = 'o';
+   }
 }
-
 function handleButton(evt) {
     console.log('This will run init');
 }
