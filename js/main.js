@@ -4,6 +4,7 @@ GRID = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 /*----- app's state (variables) -----*/
 
+let usedQuares = [];
 let turnStatus = 0;
 let gameStatus = null;
 let winningCombos = {one: 0, two: 0, three: 0, four: 0, five: 0, six: 0, seven: 0, eight: 0};
@@ -11,7 +12,7 @@ let winningCombos = {one: 0, two: 0, three: 0, four: 0, five: 0, six: 0, seven: 
 /*----- cached element references -----*/
 
 const resetBtn = document.getElementById('reset');
-const msgEl = document.getElementById('message');
+const gridSquares = document.querySelectorAll('div > div');
 
 /*----- event listeners -----*/
 
@@ -24,90 +25,115 @@ init();
 //reset everything
 function init () {
     //1. reset all state
+    usedQuares = [];
     turnStatus = 0;
     gameStatus = null;
     winningCombos = {one: 0, two: 0, three: 0, four: 0,  five: 0, six: 0, seven: 0, eight: 0};
-    //set initial message
-    renderMessage();
-
-    
+    //Reset message and board
+    render();
+    renderBoard();
 }
 
 function handleChoice(evt) {
+    // gridSquares.forEach(function(square) {
+    //     if (evt.innerHTML !== null) {
+    //         evt.onclick = null;
+    //     }  
+    // });
     if (evt.target.id === 'grid') return;
+    if (evt.target.textContent === 'O' || evt.target.textContent === 'X') return;
     if (turnStatus % 2 === 0) 
         if (evt.target.id === 'grid1') {
             winningCombos.one += 1;
             winningCombos.four += 1;
             winningCombos.seven += 1;
+            document.getElementById('grid1').innerHTML = 'X';
         } else if (evt.target.id === 'grid2') {
             winningCombos.two += 1;
             winningCombos.four += 1;
+            document.getElementById('grid2').innerHTML = 'X';
         } else if (evt.target.id === 'grid3') {
             winningCombos.eight += 1;
             winningCombos.four += 1;
             winningCombos.three += 1;
+            document.getElementById('grid3').innerHTML = 'X';
         } else if (evt.target.id === 'grid4') {
             winningCombos.one += 1;
             winningCombos.five += 1;
+            document.getElementById('grid4').innerHTML = 'X';
         } else if (evt.target.id === 'grid5') {
             winningCombos.two += 1;
             winningCombos.five += 1;
             winningCombos.seven += 1;
             winningCombos.eight += 1;
+            document.getElementById('grid5').innerHTML = 'X';
         } else if (evt.target.id === 'grid6') {
             winningCombos.three += 1;
             winningCombos.five += 1;
+            document.getElementById('grid6').innerHTML = 'X';
         } else if ( evt.target.id === 'grid7' ) {
             winningCombos.eight += 1;
             winningCombos.one += 1;
             winningCombos.six += 1;
+            document.getElementById('grid7').innerHTML = 'X';
         } else if (evt.target.id === 'grid8') {
             winningCombos.two += 1;
             winningCombos.six += 1;
+            document.getElementById('grid8').innerHTML = 'X';
         } else if (evt.target.id === 'grid9') {
             winningCombos.three += 1;
             winningCombos.seven += 1;
             winningCombos.six += 1;
+            document.getElementById('grid9').innerHTML = 'X';
         }
     if (turnStatus % 2 !== 0) 
         if (evt.target.id === 'grid1') {
             winningCombos.one -= 1;
             winningCombos.four -= 1;
             winningCombos.seven -= 1;
+            document.getElementById('grid1').innerHTML = 'O';
         } else if (evt.target.id === 'grid2') {
             winningCombos.two -= 1;
             winningCombos.four -= 1;
+            document.getElementById('grid2').innerHTML = 'O';
         } else if (evt.target.id === 'grid3') {
             winningCombos.eight -= 1;
             winningCombos.four -= 1;
             winningCombos.three -= 1;
+            document.getElementById('grid3').innerHTML = 'O';
         } else if (evt.target.id === 'grid4') {
             winningCombos.one -= 1;
             winningCombos.five -= 1;
+            document.getElementById('grid4').innerHTML = 'O';
         } else if (evt.target.id === 'grid5') {
             winningCombos.two -= 1;
             winningCombos.five -= 1;
             winningCombos.seven -= 1;
             winningCombos.eight -= 1;
+            document.getElementById('grid5').innerHTML = 'O';
         } else if (evt.target.id === 'grid6') {
             winningCombos.three -= 1;
             winningCombos.five -= 1;
+            document.getElementById('grid6').innerHTML = 'O';
         } else if ( evt.target.id === 'grid7' ) {
             winningCombos.eight -= 1;
             winningCombos.one -= 1;
             winningCombos.six -= 1;
+            document.getElementById('grid7').innerHTML = 'O';
         } else if (evt.target.id === 'grid8') {
             winningCombos.two -= 1;
             winningCombos.six -= 1;
+            document.getElementById('grid8').innerHTML = 'O';
         } else if (evt.target.id === 'grid9') {
             winningCombos.three -= 1;
             winningCombos.seven -= 1;
             winningCombos.six -= 1;
+            document.getElementById('grid9').innerHTML = 'O';
         }
     updateGameStatus();
     turnStatus += 1;
     render();
+    console.log(usedQuares);//testing
 }
 
 //transfer state to the DOM
@@ -116,6 +142,7 @@ function render () {
 }
 
 /*-------secondary functions below-------------------------------------------------*/
+
 function updateGameStatus () {
    if (turnStatus === 8) gameStatus = 'tie';
    if (winningCombos.one === 3 || winningCombos.two === 3 || 
@@ -140,7 +167,7 @@ function renderMessage () {
     let message = null;
     if (gameStatus === null) 
         if (turnStatus % 2 === 0) {
-            message = "X's turn"
+            message = "X's turn";
         } else if (turnStatus % 2 !== 0) {
             message = "O's turn";
         }
@@ -157,6 +184,11 @@ function renderMessage () {
     document.querySelector('h2').innerHTML = message;
 }
 
+function renderBoard () {
+//reset innerHTML of div to ''
+gridSquares.forEach(function(square) {
+    square.innerHTML = '';
+});
+}
 
-
-
+usedQuares.push(document.ge)
