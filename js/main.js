@@ -42,6 +42,7 @@ function handleChoice(evt) {
     // });
     if (evt.target.id === 'grid') return;
     if (evt.target.textContent === 'O' || evt.target.textContent === 'X') return;
+    if (gameStatus) return;
     if (turnStatus % 2 === 0) 
         if (evt.target.id === 'grid1') {
             winningCombos.one += 1;
