@@ -1,10 +1,6 @@
 /*----- constants -----*/
-
-GRID = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 /*----- app's state (variables) -----*/
 
-let usedQuares = [];
 let turnStatus = 0;
 let gameStatus = null;
 let winningCombos = {one: 0, two: 0, three: 0, four: 0, five: 0, six: 0, seven: 0, eight: 0};
@@ -191,5 +187,3 @@ gridSquares.forEach(function(square) {
     square.innerHTML = '';
 });
 }
-
-usedQuares.push(document.ge)

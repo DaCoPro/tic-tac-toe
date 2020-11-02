@@ -12,7 +12,10 @@ div {
     margin-left: auto;
 }
 div div {
+    display:flex;
+    flex-direction: column;
+    font-size: 100px;
     width: 100px;
     height: 100px;
-    outline: 1px solid;
+    outline: 1.3px solid;
 }
