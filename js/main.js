@@ -25,17 +25,11 @@ function init () {
     turnStatus = 0;
     gameStatus = null;
     winningCombos = {one: 0, two: 0, three: 0, four: 0,  five: 0, six: 0, seven: 0, eight: 0};
-    //Reset message and board
     render();
     renderBoard();
 }
 
 function handleChoice(evt) {
-    // gridSquares.forEach(function(square) {
-    //     if (evt.innerHTML !== null) {
-    //         evt.onclick = null;
-    //     }  
-    // });
     if (evt.target.id === 'grid') return;
     if (evt.target.textContent === 'O' || evt.target.textContent === 'X') return;
     if (gameStatus) return;
@@ -130,12 +124,11 @@ function handleChoice(evt) {
     updateGameStatus();
     turnStatus += 1;
     render();
-    console.log(usedQuares);//testing
 }
 
-//transfer state to the DOM
 function render () {
     renderMessage();
+    resetBtn.style.visibility = gameStatus ? 'visible' : 'hidden';
 }
 
 /*-------secondary functions below-------------------------------------------------*/
@@ -177,12 +170,10 @@ function renderMessage () {
     if (gameStatus === 'tie') {
         message = "It was a tie!";
     }
-    console.log(message);
     document.querySelector('h2').innerHTML = message;
 }
 
 function renderBoard () {
-//reset innerHTML of div to ''
 gridSquares.forEach(function(square) {
     square.innerHTML = '';
 });
