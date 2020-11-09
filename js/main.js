@@ -16,11 +16,10 @@ document.querySelector('div').addEventListener('click', handleChoice);
 document.querySelector('button').addEventListener('click', handleButton);
 
 /*----- functions -----*/
+
 init();
 
-//reset everything
 function init () {
-    //1. reset all state
     usedQuares = [];
     turnStatus = 0;
     gameStatus = null;
